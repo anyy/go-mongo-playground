@@ -40,12 +40,12 @@ func (c *UserController) Create(w http.ResponseWriter, r *http.Request) {
 	render.Render(w, r, user)
 }
 
-func (c *UserController) Index(w http.ResponseWriter, r *htttp.Request) {
+func (c *UserController) Index(w http.ResponseWriter, r *http.Request) {
 	res, err := c.Interactor.Get()
 	if err != nil {
 		render.Render(w, r, helper.ErrInvalidRequest(err))
 		return
 	}
 	render.Status(r, http.StatusOK)
-	render.Render(w, r, res)
+	render.RenderList(w, r, res)
 }

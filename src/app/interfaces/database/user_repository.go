@@ -23,15 +23,15 @@ func (r *UserRepository) Store(u *domain.User) (interface{}, error) {
 	return res.InsertedID, err
 }
 
-func (r *UserRepository) FindALL() ([]domain.User, error) {
+func (r *UserRepository) FindALL() ([]*domain.User, error) {
 	col := r.KVSHandler.GetCollection("mongo-playgroud", "user")
 	res, err := col.Find(context.Background(), bson.D{})
 	if err != nil {
 		return nil, err
 	}
-	var result []domain.User
+	var result []*domain.User
 	for res.Next(context.Background()) {
-		var u domain.User
+		var u *domain.User
 		if err = res.Decode(&u); err != nil {
 			return nil, err
 		}
