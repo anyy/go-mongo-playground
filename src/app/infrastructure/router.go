@@ -17,6 +17,9 @@ func init() {
 	r.Route("/user", func(r chi.Router) {
 		r.Post("/", uc.Create)
 		r.Get("/", uc.Index)
+		r.Route("/{userID}", func(r chi.Router) {
+			r.Delete("/", uc.Delete)
+		})
 	})
 
 	Router = r

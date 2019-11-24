@@ -7,6 +7,7 @@ import (
 	"github.com/gazelle0130/go-mongo-playground/src/app/interfaces/database"
 	"github.com/gazelle0130/go-mongo-playground/src/app/interfaces/helper"
 	"github.com/gazelle0130/go-mongo-playground/src/app/usecase"
+	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 )
 
@@ -48,4 +49,14 @@ func (c *UserController) Index(w http.ResponseWriter, r *http.Request) {
 	}
 	render.Status(r, http.StatusOK)
 	render.RenderList(w, r, res)
+}
+
+func (c *UserController) Delete(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "userID")
+	err := c.Interactor.DeleteByID(userID)
+	if err != nil {
+		render.Render(w, r, helper.ErrInvalidRequest(err))
+		return
+	}
+	render.Status(r, http.StatusNoContent)
 }

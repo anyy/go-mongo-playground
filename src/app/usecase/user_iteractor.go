@@ -24,3 +24,7 @@ func (i *UserInteractor) Get() ([]render.Renderer, error) {
 	}
 	return ren, nil
 }
+
+func (i *UserInteractor) DeleteByID(id string) error {
+	return i.UserRepository.DeleteOne(id)
+}

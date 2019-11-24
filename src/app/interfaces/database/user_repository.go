@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/gazelle0130/go-mongo-playground/src/app/domain"
@@ -38,4 +39,13 @@ func (r *UserRepository) FindALL() ([]*domain.User, error) {
 		result = append(result, u)
 	}
 	return result, nil
+}
+
+func (r *UserRepository) DeleteOne(id string) error {
+	col := r.KVSHandler.GetCollection("mongo-playground", "user")
+	res, err := col.DeleteOne(context.TODO(), bson.M{"id": id})
+	if res.DeletedCount == 0 {
+		fmt.Println("DeleteOne() document not found:", res)
+	}
+	return err
 }
