@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"os"
 	"time"
 
 	"github.com/gazelle0130/go-mongo-playground/src/app/interfaces/database"
@@ -20,7 +21,7 @@ func (k *KVSHandler) GetCollection(db, col string) *mongo.Collection {
 func NewKVSHandler() (database.KVSHandler, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_DB_URI")))
 	if err != nil {
 		return nil, err
 	}
