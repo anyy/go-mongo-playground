@@ -3,12 +3,14 @@ package infrastructure
 import (
 	"github.com/gazelle0130/go-mongo-playground/src/app/interfaces/controllers"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 )
 
 var Router *chi.Mux
 
 func init() {
 	r := chi.NewRouter()
+	r.Use(middleware.SetHeader("Content-Type", "application/json"))
 
 	kvsh, err := NewKVSHandler()
 	if err != nil {
